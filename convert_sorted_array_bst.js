@@ -1,5 +1,6 @@
 /*
-Time/Space complexity = O(N)
+Time Complexity = O(N)
+Space Complexity = log(N)
 */
 
 var sortedArrayToBST = function(nums) {
