@@ -3,6 +3,8 @@ Time complexity : O(N)
 Space Complexity: O(N)
 
 """
+
+# Kruskal's algorithm
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         
@@ -57,3 +59,50 @@ class Solution:
                 edges += 1
                 
         return out
+
+
+
+"""
+Time Complexity : O(E+V)*O(logV)
+Space Complexity: O(V)
+"""
+
+# Prims Algorithm
+import heapq
+
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        
+        
+            if not points:
+                return 0            
+
+            size = len(points)
+            visited = set([0])
+            x1, y1 = points[0]
+            edges = []
+            count = size - 1
+            cost = 0
+            
+            for indx, val in enumerate(points[1:], start = 1):
+                x2, y2 = val
+                dist = abs(x1 - x2) + abs(y1 - y2)
+                edges.append((dist, 0, indx))
+                
+            heapq.heapify(edges)
+            
+            while edges and count > 0:
+                dist, start, end = heapq.heappop(edges)
+ 
+                if end not in visited:
+                    visited.add(end)
+                    cost += dist
+                    for j in range(size):
+                        if j not in visited:
+                            x1, y1 = points[end]
+                            x2, y2 = points[j]
+                            diff = abs(x1-x2) + abs(y1-y2)
+                            heapq.heappush(edges, (diff, end, j))
+                    count -= 1                    
+                    
+            return cost
